@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-#   ORION KIT - Installer v1.1 (Linux)
+#   ORION KIT - Installer v1.2 (Linux)
 #   By @THEgrison  |  Powered by Ventoy
 #
 #   Usage : sudo bash Install-OrionKit.sh
@@ -251,9 +251,11 @@ fi
 
 ok "Ventoy $VENTOY_VERSION installe."
 info "Attente de la reconnaissance des partitions..."
-sleep 4
+sleep 3
 partprobe "$selected_disk" 2>/dev/null
-sleep 2
+sleep 3
+udevadm settle 2>/dev/null
+sleep 1
 
 # ============================================================
 #  ETAPE 4 — DETECTION DES PARTITIONS PAR LABEL
@@ -280,12 +282,32 @@ fi
 VTOYEFI_MNT="/mnt/OrionKit_VTOYEFI"
 VENTOY_MNT="/mnt/OrionKit_Ventoy"
 
+# Nettoyer les anciens points de montage si déjà utilisés
+umount "$VTOYEFI_MNT" 2>/dev/null
+umount "$VENTOY_MNT"  2>/dev/null
 mkdir -p "$VTOYEFI_MNT" "$VENTOY_MNT"
-mount "$VTOYEFI_DEV" "$VTOYEFI_MNT"
-mount "$VENTOY_DEV"  "$VENTOY_MNT"
 
-ok "VTOYEFI monte sur : $VTOYEFI_MNT"
-ok "Ventoy  monte sur : $VENTOY_MNT"
+# Monter VTOYEFI (FAT32)
+if mount -t vfat "$VTOYEFI_DEV" "$VTOYEFI_MNT" -o uid=0,gid=0,fmask=0133,dmask=0022; then
+    ok "VTOYEFI monte sur : $VTOYEFI_MNT"
+else
+    err "Echec du montage VTOYEFI ($VTOYEFI_DEV). Essayez de debrancher et rebrancher la cle."
+    exit 1
+fi
+
+# Monter Ventoy (exFAT) — avec fallback si exfat-fuse n'est pas dispo
+if mount -t exfat "$VENTOY_DEV" "$VENTOY_MNT" -o uid=0,gid=0,fmask=0133,dmask=0022 2>/dev/null; then
+    ok "Ventoy  monte sur : $VENTOY_MNT (exfat natif)"
+elif mount -t fuse.exfat "$VENTOY_DEV" "$VENTOY_MNT" -o uid=0,gid=0,fmask=0133,dmask=0022 2>/dev/null; then
+    ok "Ventoy  monte sur : $VENTOY_MNT (exfat-fuse)"
+elif mount "$VENTOY_DEV" "$VENTOY_MNT" 2>/dev/null; then
+    ok "Ventoy  monte sur : $VENTOY_MNT (auto-detect)"
+else
+    err "Echec du montage Ventoy ($VENTOY_DEV)."
+    err "Verifiez que exfatprogs ou exfat-fuse est installe."
+    umount "$VTOYEFI_MNT" 2>/dev/null
+    exit 1
+fi
 
 # ============================================================
 #  ETAPE 5 — EXTRACTION DES ZIPS ORION KIT
@@ -409,9 +431,22 @@ echo -e "  ${GRAY}Pour booter : rebootez et appuyez sur F12.${NC}"
 echo ""
 
 # Demonter les partitions
-step "Demontage des partitions..."
+step "Synchronisation et demontage des partitions..."
 sync
-umount "$VTOYEFI_MNT" "$VENTOY_MNT" 2>/dev/null
+sync
+sleep 2
+if umount "$VENTOY_MNT" 2>/dev/null; then
+    ok "Partition Ventoy demontee."
+else
+    err "Impossible de demonter $VENTOY_MNT — tentative forcee..."
+    umount -l "$VENTOY_MNT" 2>/dev/null
+fi
+if umount "$VTOYEFI_MNT" 2>/dev/null; then
+    ok "Partition VTOYEFI demontee."
+else
+    err "Impossible de demonter $VTOYEFI_MNT — tentative forcee..."
+    umount -l "$VTOYEFI_MNT" 2>/dev/null
+fi
 rmdir "$VTOYEFI_MNT" "$VENTOY_MNT" 2>/dev/null
 ok "Partitions demontees proprement."
 
