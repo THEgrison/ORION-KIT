@@ -1,4 +1,3 @@
-# PROJET EN COURS DE CREATION BUG PRESENT
 # 🔭 ORION KIT
 
 <p align="center">
@@ -17,6 +16,27 @@
 
 ORION KIT est une clé USB multiboot prête à l'emploi pour **diagnostiquer, réparer et récupérer** des systèmes Windows et Linux.  
 Inspiré de Hiren's BootCD, il repose sur [Ventoy](https://www.ventoy.net) avec un thème personnalisé (fond Andromède).
+
+---
+
+## ⬇️ Télécharger l'installateur
+
+> Choisissez votre système d'exploitation :
+
+<p align="center">
+  <a href="https://github.com/THEgrison/ORION-KIT/raw/main/Install-OrionKit.ps1">
+    <img src="https://img.shields.io/badge/🪟%20Windows-Télécharger%20Install--OrionKit.ps1-0078D4?style=for-the-badge&logo=windows&logoColor=white" alt="Télécharger pour Windows" />
+  </a>
+  &nbsp;&nbsp;
+  <a href="https://github.com/THEgrison/ORION-KIT/raw/main/Install-OrionKit.sh">
+    <img src="https://img.shields.io/badge/🐧%20Linux-Télécharger%20Install--OrionKit.sh-E95420?style=for-the-badge&logo=linux&logoColor=white" alt="Télécharger pour Linux" />
+  </a>
+</p>
+
+| Système | Fichier | Lien direct |
+|---------|---------|-------------|
+| 🪟 **Windows** 10/11 | `Install-OrionKit.ps1` | [⬇️ Télécharger](https://github.com/THEgrison/ORION-KIT/raw/main/Install-OrionKit.ps1) |
+| 🐧 **Linux** (toute distro) | `Install-OrionKit.sh` | [⬇️ Télécharger](https://github.com/THEgrison/ORION-KIT/raw/main/Install-OrionKit.sh) |
 
 ---
 

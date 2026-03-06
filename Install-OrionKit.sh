@@ -75,7 +75,7 @@ TEMP_DIR="/tmp/OrionKit"
 # Tableau associatif des ISOs
 # Format : "Nom|Dossier|Fichier|URL principale|URL fallback|URL manuelle"
 ISOS=(
-    "SystemRescue 12.03|Linux-et-Outils|systemrescue-12.03-amd64.iso|https://downloads.sourceforge.net/project/systemrescuecd/sysresccd-x86/systemrescue-12.03-amd64.iso|https://archive.org/download/systemrescue-12.03/systemrescue-12.03-amd64.iso|https://www.system-rescue.org/Download/"
+    "SystemRescue 12.03|Linux-et-Outils|systemrescue-12.03-amd64.iso|https://sourceforge.net/projects/systemrescuecd/files/sysresccd-x86/12.03/systemrescue-12.03-amd64.iso/download|https://archive.org/download/systemrescue-12.03/systemrescue-12.03-amd64.iso|https://www.system-rescue.org/Download/"
     "GParted Live 1.8.0|Linux-et-Outils|gparted-live-1.8.0-2-amd64.iso|https://downloads.sourceforge.net/gparted/gparted-live-1.8.0-2-amd64.iso|https://archive.org/download/gparted-live-1.8.0-2/gparted-live-1.8.0-2-amd64.iso|https://gparted.org/download.php"
     "Clonezilla 3.3.1|Linux-et-Outils|clonezilla-live-3.3.1-35-amd64.iso|https://sourceforge.net/projects/clonezilla/files/clonezilla_live_stable/3.3.1-35/clonezilla-live-3.3.1-35-amd64.iso|https://archive.org/download/clonezilla-live-3.3.1-35/clonezilla-live-3.3.1-35-amd64.iso|https://clonezilla.org/downloads.php"
     "Rescuezilla 2.6.1|Linux-et-Outils|rescuezilla-2.6.1-64bit.oracular.iso|https://github.com/rescuezilla/rescuezilla/releases/download/2.6.1/rescuezilla-2.6.1-64bit.oracular.iso|https://archive.org/download/rescuezilla-2.6.1/rescuezilla-2.6.1-64bit.oracular.iso|https://rescuezilla.com/download"
